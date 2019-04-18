@@ -62,6 +62,16 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="login-as" class="col-md-4 col-form-label text-md-right"></label>
+
+                            <div class="col-md-6">
+                                <button type="button" id="entrepreneur" class="btn btn-outline-primary">Entrepreneur</button>
+                                <button type="button" id="investor" class="btn btn-outline-primary">Investor</button>
+                                <input type="hidden" id="level" name="level">
+                            </div>
+                        </div>
+
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
@@ -75,4 +85,27 @@
         </div>
     </div>
 </div>
+<script>
+    var e1 = document.getElementById('entrepreneur');
+    var e2 = document.getElementById('investor');
+    var level = document.getElementById('level');
+
+    e1.addEventListener('click',function(e){
+        e2.classList.add('btn-outline-primary');
+        e2.classList.remove('btn-primary');
+
+        e1.classList.remove('btn-outline-primary');
+        e1.classList.add('btn-primary');
+        level.value = 1
+    })
+    
+    e2.addEventListener('click',function(e){
+        e1.classList.add('btn-outline-primary');
+        e1.classList.remove('btn-primary');
+
+        e2.classList.remove('btn-outline-primary');
+        e2.classList.add('btn-primary');
+        level.value = 2
+    })
+</script>
 @endsection

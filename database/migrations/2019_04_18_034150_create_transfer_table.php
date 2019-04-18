@@ -16,9 +16,7 @@ class CreateTransferTable extends Migration
         Schema::create('transfer', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('from');
-            $table->unsignedBigInteger('to');
             $table->foreign('from')->references('id')->on('users');
-            $table->foreign('to')->references('id')->on('users');
             $table->string('account_target');
             $table->integer('nominal');
             $table->integer('discount');
