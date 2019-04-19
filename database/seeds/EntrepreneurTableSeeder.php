@@ -11,7 +11,7 @@ class EntrepreneurTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
+        DB::table('entrepreneur')->insert([
             [
                 "id_user" => 2,
                 "name" => "Felix Krellix",
