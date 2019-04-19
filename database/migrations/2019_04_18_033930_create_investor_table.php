@@ -20,12 +20,12 @@ class CreateInvestorTable extends Migration
             $table->string('name');
             $table->date('birthdate');
             $table->smallInteger('age');
-            $table->string('occupation');
-            $table->text('address');
-            $table->string('identity');
-            $table->string('bank_account');
-            $table->string('profile_picture');
-            $table->integer('balance');
+            $table->string('occupation')->default("None");
+            $table->text('address')->nullable();
+            $table->string('identity')->nullable();
+            $table->string('bank_account')->nullable();
+            $table->string('profile_picture')->default("none.jpg");
+            $table->integer('balance')->default("0");
             $table->timestamps();
         });
     }

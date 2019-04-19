@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->unsignedSmallInteger('level');
             $table->foreign('level')->references('id')->on('level');
-            $table->unsignedSmallInteger('account_stat');
+            $table->unsignedSmallInteger('account_stat')->default('1');
             $table->foreign('account_stat')->references('id')->on('status');
             $table->rememberToken();
             $table->timestamps();

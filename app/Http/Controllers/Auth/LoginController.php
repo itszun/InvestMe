@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace InvestMe\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use InvestMe\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {

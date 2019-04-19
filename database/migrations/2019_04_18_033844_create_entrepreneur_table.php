@@ -19,12 +19,12 @@ class CreateEntrepreneurTable extends Migration
             $table->foreign('id_user')->references('id')->on('users');
             $table->string('name');
             $table->date('birthdate');
-            $table->smallInteger('age');
+            $table->smallInteger('age')->default("0");
             $table->text('address');
-            $table->string('identity');
-            $table->string('bank_account');
-            $table->string('profile_picture');
-            $table->integer('balance');
+            $table->string('identity')->nullable();
+            $table->string('bank_account')->nullable();
+            $table->string('profile_picture')->default("none.jpg");
+            $table->integer('balance')->default("0");
             $table->timestamps();
         });
     }

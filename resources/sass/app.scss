@@ -5,10 +5,19 @@
 // Variables
 @import 'variables';
 
+$theme-colors:(
+  "primary" : darken(#5cb85c, 6.5%)
+);
+
+$input-border-focus: #38c172;
+
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+
 
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
+
