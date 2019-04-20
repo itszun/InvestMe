@@ -84,7 +84,9 @@ class EntrepreneurController extends Controller
     public function update(Request $request, $id)
     {
         $entrepreneur = Entrepreneur::find($id);
-        $entrepreneur->name = $name;
+        $entrepreneur->name = $request->name;
+        $entrepreneur->address = $request->address;
+        $entrepreneur->birthdate = $request->birthdate;
         // $entrepreneur->save()
         // DB::table('entrepreneur')->where('id', $id)->update([
         //     // 'id_user' => $request->id_user,

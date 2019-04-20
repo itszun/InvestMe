@@ -5,17 +5,24 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-            @foreach ($entrepreneur as $e)
-                <form method="post" action="/entrepreneur/{{ $e->id }}" class="form-group">
+            {{Form::model($entrepreneur)}}
+                <form method="post" action="/entrepreneur/{{ $entrepreneur->id }}" class="form-group">
                     {{ csrf_field() }}
                     <input type="hidden" name="_method" value="PUT">
                     <div class="form-group">
-                        <label for="name"></label>
-                    <input type="text" name="name" id="name" value="{{ $e->name }}">
+                        <label for="name">Name</label>
+                    <input type="text" name="name" id="name" value="{{ $entrepreneur->name }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                    <input type="text" name="address" id="address" value="{{ $entrepreneur->address }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="Birthdate">Birthdate</label>
+                    <input type="date" name="birthdate" id="birthdate" value="{{ $entrepreneur->birthdate }}">
                     </div>
                     <button type="submit" class="btn btn-primary">Edit</button>
                 </form>
-            @endforeach
             </div>
         </div>
     </div>
