@@ -6,11 +6,26 @@
         <div class="col-md-8">
             <div class="card">
             @foreach ($entrepreneurs as $entrepreneur)
-            <ul>
-                <li>{{ $entrepreneur->id }}</li>
-                <li>{{ $entrepreneur->name }}</li>
-                <li><a href="/entrepreneur/{{ $entrepreneur->id}}">Detail</a></li>
-            </ul>
+            <div class="container row p-3">
+                <div class="col-3">
+                <div class="profile-header-container">
+                    <div class="profile-header-img mx-auto">
+                        {{ Html::image('image/profile/'.$entrepreneur->profile_picture, 'Profile',
+                        ['class' => 'img-circle'])}}
+                    </div>
+                </div>
+                </div>
+                <div class="col-6">
+                    <div class="h3">{{$entrepreneur->name}}</div>
+                    <div>Id : {{ $entrepreneur->id }}</div>
+                    <div>Age : {{ $entrepreneur->age }}</div>
+                </div>
+                <div class="col-3">
+                    <a href="/entrepreneur/{{ $entrepreneur->id}}" class="btn btn-outline-primary">Detail</a>
+                    <a href="/entrepreneur/{{ $entrepreneur->id}}" class="btn btn-outline-danger">Delete</a>
+                </div>
+            </div>
+            <hr>
             @endforeach
             </div>
         </div>

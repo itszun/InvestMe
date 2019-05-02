@@ -36,4 +36,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function hasLevel($levelName)
+    {
+        $levels = Level::where('name',$levelName)->first();
+        if($this->level == $levels->id){
+            return True;
+        }
+    }
 }

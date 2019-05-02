@@ -3,6 +3,7 @@
 namespace InvestMe\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Illuminate\Contracts\Session\Session;
 
 class Authenticate extends Middleware
 {
@@ -17,5 +18,7 @@ class Authenticate extends Middleware
         if (! $request->expectsJson()) {
             return route('login');
         }
+        Session::put('username', 'test');
+        Session::start();
     }
 }

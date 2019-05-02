@@ -20,6 +20,7 @@ class CreateEntrepreneurTable extends Migration
             $table->string('name');
             $table->date('birthdate');
             $table->smallInteger('age')->default("0");
+            $table->enum('gender', ['male', 'female']);
             $table->text('address');
             $table->string('identity')->nullable();
             $table->string('bank_account')->nullable();

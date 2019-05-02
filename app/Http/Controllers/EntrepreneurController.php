@@ -5,9 +5,15 @@ namespace InvestMe\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use InvestMe\Entrepreneur;
+use Carbon\Carbon;
 
 class EntrepreneurController extends Controller
 {
+    public function __construct() {
+        // $this->middleware('level:admin')->only(['index','show','destroy','edit']);
+        // $this->middleware('level:entrepreneur')->only(['create','store','edit','show','update']);
+        // $this->middleware('level:investor')->only(['create','store','edit','show','update']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -26,7 +32,8 @@ class EntrepreneurController extends Controller
      */
     public function create()
     {
-        //
+        $entrepreneur = new Entrepreneur;
+        return view('entrepreneur.create', ["entrepreneur" => $entrepreneur]);
     }
 
     /**
@@ -37,16 +44,16 @@ class EntrepreneurController extends Controller
      */
     public function store(Request $request)
     {
-        DB::table('entrepreneur')->insert([
-            'id_user' => $request->id_user,
-            'name' => $request->name,
-            'birthdate' => $request->birthdate,
-            'age' => $request->age,
-            'address' => $request->address,
-            'identity' => $request->identity,
-            'bank_account' => $request->bank_account,
-            'profile_picture' => $request->profile_picture 
-        ]);
+        $entrepreneur = new Entrepreneur;
+        $entrepreneur->id_user = $request->id_user;
+        $entrepreneur->name = $request->name;
+        $entrepreneur->address = $request->address;
+        $entrepreneur->birthdate = $request->birthdate;
+        $entrepreneur->age = Carbon::parse($request->birthdate)->age;
+        // $entrepreneur->identity = $request->identity;
+        // $entrepreneur->bank_account = $request->banck_account;
+        // $entrepreneur->profile_picture = $request->profile_picture;
+        $entrepreneur->save();
         return redirect('/entrepreneur');
     }
 
@@ -71,7 +78,7 @@ class EntrepreneurController extends Controller
     public function edit($id)
     {
         $entrepreneur = Entrepreneur::find($id);
-        return view('entrepreneur.edit', [ "entrepreneur" => $entrepreneur] );
+        return view('entrepreneur.edit', [ "entrepreneur" => $entrepreneur]);
     }
 
     /**
@@ -87,17 +94,7 @@ class EntrepreneurController extends Controller
         $entrepreneur->name = $request->name;
         $entrepreneur->address = $request->address;
         $entrepreneur->birthdate = $request->birthdate;
-        // $entrepreneur->save()
-        // DB::table('entrepreneur')->where('id', $id)->update([
-        //     // 'id_user' => $request->id_user,
-        //     'name' => $request->name,
-        //     // 'birthdate' => $request->birthdate,
-        //     // 'age' => $request->age,
-        //     // 'address' => $request->address,
-        //     // 'identity' => $request->identity,
-        //     // 'bank_account' => $request->bank_account,
-        //     // 'profile_picture' => $request->profile_picture 
-        // ]);
+        $entrepreneur->save();
         return redirect('/entrepreneur');
     }
 

@@ -21,6 +21,7 @@ class CreateInvestorTable extends Migration
             $table->date('birthdate');
             $table->smallInteger('age');
             $table->string('occupation')->default("None");
+            $table->enum('gender', ['male', 'female']);
             $table->text('address')->nullable();
             $table->string('identity')->nullable();
             $table->string('bank_account')->nullable();

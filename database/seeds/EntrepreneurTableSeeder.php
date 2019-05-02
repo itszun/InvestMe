@@ -17,7 +17,8 @@ class EntrepreneurTableSeeder extends Seeder
                 "name" => "Felix Krellix",
                 "birthdate" => "1989-05-02",
                 "age" => 30,
-                "address" => "Evolution Street 18A Bridgestone"
+                "address" => "Evolution Street 18A Bridgestone",
+                "gender" => 'male',
             ],
             [
                 "id_user" => 4,
@@ -25,6 +26,7 @@ class EntrepreneurTableSeeder extends Seeder
                 "birthdate" => "1980-12-21",
                 "age" => 39,
                 "address" => "Beside My Neighbor House",
+                "gender" => 'male',
             ]
         ]);
     }
