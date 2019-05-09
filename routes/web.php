@@ -19,6 +19,11 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware' => ['auth']], function() { 
     Route::resources([
-        'entrepreneur' => 'EntrepreneurController'
+        'entrepreneur' => 'EntrepreneurController',
     ]);
+    Route::get('/offer/{id}/investor','OfferController@Investor');
+    Route::get('/offer/{id}/entrepreneur','OfferController@Entrepreneur');
+    Route::post('/offer/store','OfferController@store')->name('offer.store');
+    Route::get('/offer', 'OfferController@index')->name('offer.index');
+    Route::get('/offer/{id}', 'OfferController@show')->name('offer.detail');
 });

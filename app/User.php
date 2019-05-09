@@ -5,6 +5,8 @@ namespace InvestMe;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use InvestMe\Entrepreneur;
+use InvestMe\Investor;
 
 class User extends Authenticatable
 {
@@ -37,11 +39,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function hasLevel($levelName)
+    public function hasLevel()
     {
-        $levels = Level::where('name',$levelName)->first();
-        if($this->level == $levels->id){
-            return True;
+        $levelid = $this->level;
+        $levels = Level::where('id',$levelid)->first();
+        return $levels->name;
+    }
+
+    public function account()
+    {
+        $lvl = $this->level;
+        $id = $this->id;
+        if($lvl == 1){
+            $entr = Entrepreneur::where('id_user', $id)->first();
+            return $entr;
         }
     }
 }
