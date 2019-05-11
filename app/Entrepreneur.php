@@ -10,6 +10,8 @@ class Entrepreneur extends Model
     
     public function account()
     {
-        $this->belongsTo('Account');
+       return $this->belongsTo('Account');
     }
+
 }
+

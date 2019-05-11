@@ -16,6 +16,28 @@ class OfferController extends Controller
      */
     public function index()
     {
+        $id = auth()->user()->id;
+        $offers = Account::find($id)->offers;
+        $request = Account::find($id)->request;
+        $targets = [];
+        $n = 0;
+        foreach($offers as $o) 
+        {
+            $user = Account::find($o->to)->investor;
+            $name = $user->name;
+            $offers[$n]->targets = $name;
+            $n++;
+        };
+        $targets = [];
+        $n = 0;
+        foreach($request as $r) 
+        {
+            $user = Account::find($r->from)->entrepreneur;
+            $name = $user->name;
+            $request[$n]->targets = $name;
+            $n++;
+        };
+        return view('offer.detail', ['offers' => $offers, 'request' => $request]);
     }
 
     /**
@@ -54,8 +76,29 @@ class OfferController extends Controller
      */
     public function show($id)
     {
-        $offer = Offer::where('from', $id)->get();
-        return view('offer.detail', ['offers' => $offer]);
+        $offers = Account::find($id)->offers;
+        $request = Account::find($id)->request;
+        $targets = [];
+        $n = 0;
+        foreach($offers as $o) 
+        {
+            $user = Account::find($o->to)->investor;
+            $name = $user->name;
+            $offers[$n]->targets = $name;
+            $n++;
+        };
+        $targets = [];
+        $n = 0;
+        foreach($request as $r) 
+        {
+            $user = Account::find($r->from)->entrepreneur;
+            $name = $user->name;
+            $request[$n]->targets = $name;
+            $n++;
+        };
+        $id = auth()->user()->id;
+        dd($id);
+        return view('offer.detail', ['offers' => $offers, 'request' => $request]);
     }
 
     /**
@@ -97,5 +140,13 @@ class OfferController extends Controller
         $offer = new Offer;
         $party2 = Account::find($id)->investor;
         return view('offer.create', ['party2' => $party2, 'offer' => $offer]);
+    }
+
+    public function approve(Request $request)
+    {   
+        $offer = Offer::find($request->id);
+        $offer->party_approval2 = 1;
+        $offer->save();
+        return redirect('/offer');
     }
 }

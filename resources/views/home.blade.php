@@ -39,7 +39,7 @@
                     <div>Age : {{ $inv->age }}</div>
                 </div>
                 <div class="col-3">
-                    <a href="/offer/{{ $inv->id}}/investor" class="btn btn-outline-primary">Offer</a>
+                    <a href="/offer/{{ $inv->id_user}}/investor" class="btn btn-outline-primary">Offer</a>
                 </div>
             </div>
                     @endforeach

@@ -10,6 +10,11 @@ class Offer extends Model
 
     public function user()
     {
-        return $this->hasOne('InvestMe\Account', 'id', 'from');
+        return $this->belongsTo('InvestMe\Account', 'from', 'id');
+    }
+
+    public function target()
+    {
+        return $this->hasOne('InvestMe\Account', 'to', 'id');
     }
 }

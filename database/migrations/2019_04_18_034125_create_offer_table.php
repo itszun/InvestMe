@@ -21,8 +21,7 @@ class CreateOfferTable extends Migration
             $table->foreign('to')->references('id')->on('users');
             $table->integer('fund');
             $table->integer('share');
-            $table->boolean('party_approval1');
-            $table->boolean('party_approval2');
+            $table->boolean('approved')->default('false');
             $table->timestamps();
         });
     }

@@ -7,6 +7,7 @@ use InvestMe\Http\Middleware\Authenticate as Auth;
 
 class Admin
 {
+    protected $level = 3;
     /**
      * Handle an incoming request.
      *
@@ -16,6 +17,14 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-        return $next($request);
+        if(auth()->user())
+        {
+            if(auth()->user()->level == $this->level)
+            {
+                return $next($request);
+            }
+            return redirect('/home');
+        }
+        return redirect('/login');
     }
 }
