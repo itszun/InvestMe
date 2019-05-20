@@ -9,12 +9,9 @@
 
     <title>{{ config('app.name') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
   integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
   crossorigin="anonymous"></script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
@@ -27,7 +24,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-success shadow">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ url('/home') }}">
                     {{ config('app.name', 'InvestMe') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -37,9 +34,11 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                        <a href="{{ route('entrepreneur.index') }}" class="nav-link">All Entrepreneur</a>
-                        </li>
+                    @if(Auth::user()->level == 1)
+                    @include('inc/ent_nav')
+                    @elseif(Auth::user()->level == 2)
+                    @include('inc/inv_nav')
+                    @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -57,7 +56,7 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->username }} <span class="caret"></span>
+                                    {{ Auth::user()->username }} | Rp.{{ Auth::user()->balance() }} <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -83,12 +82,19 @@
         </nav>
 
         <main>
-        <div class="container">
-            <div class="row">
+        <div class="container-fluid">
+        
+            <div class="row my-3">
                 @yield('content')
             </div>
         </div>
         </main>
     </div>
+    
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="{{ asset('js/alert.js') }}" defer></script>
+
 </body>
 </html>

@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use InvestMe\Account;
 use InvestMe\Offer;
 use InvestMe\User;
+use InvestMe\Entrepreneur;
+use InvestMe\Business;
+use InvestMe\Sector;
 
 class OfferController extends Controller
 {
@@ -17,24 +20,26 @@ class OfferController extends Controller
     public function index()
     {
         $id = auth()->user()->id;
-        $offers = Account::find($id)->offers;
-        $request = Account::find($id)->request;
+        $offers = Account::find($id)->offers->where("party_approval2",0);
+        $request = Account::find($id)->request->where("party_approval2",0);
         $targets = [];
-        $n = 0;
+        $n = 1;
+        $offers = $offers->toArray();
         foreach($offers as $o) 
         {
-            $user = Account::find($o->to)->investor;
+            $user = Account::find($o['to'])->usertype;
             $name = $user->name;
-            $offers[$n]->targets = $name;
+            $offers[$n]['targets'] = $name;
             $n++;
         };
         $targets = [];
-        $n = 0;
+        $n = 1;
+        $request = $request->toArray();
         foreach($request as $r) 
         {
-            $user = Account::find($r->from)->entrepreneur;
+            $user = Account::find($r['from'])->usertype;
             $name = $user->name;
-            $request[$n]->targets = $name;
+            $request[$n]['targets'] = $name;
             $n++;
         };
         return view('offer.detail', ['offers' => $offers, 'request' => $request]);
@@ -45,9 +50,35 @@ class OfferController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+        $target = Account::find($id)
+            ->with([
+                'entrepreneur' => function($query){
+                    $query->select('id','id_user','name','balance','profile_picture');
+                },
+                'investor' => function($query){
+                    $query->select('id','id_user','name','occupation','balance','profile_picture');
+                },
+                'business' => function($query){
+                    $query->select('id', 'name', 'owner');
+                }])
+            ->where('id',$id)->first(
+                ['id','username','level']
+            );
+        // $target = Account::where('id',$id)->first();
+        $target = $target->toArray();
+        $tlvl = $target['investor'] == null ? $target['entrepreneur'] : $target['investor'];
+        $tb = $target['business'] == null ? false : $target['business'];
+        if($tb)
+        {
+            $business = Business::with('owner')->where('owner', $id)->pluck('name','id');
+        }else{
+            $uid = auth()->user()->id;
+            $business = Business::with('owner')->where('owner', $uid)->pluck('name','id');
+        }
+        $offer = new Offer;
+        return view('offer.create', ['party2' => $tlvl, 'offer' => $offer, 'target' => $target, 'business' => $business]);
     }
 
     /**
@@ -59,8 +90,9 @@ class OfferController extends Controller
     public function store(Request $request)
     {
         $offer = new Offer;
-        $offer->from = $request->fromId;
+        $offer->from = auth()->user()->id;
         $offer->to = $request->toId;
+        $offer->id_business = $request->business;
         $offer->fund = $request->fund;
         $offer->share = $request->sharing;
         $offer->party_approval1 = 1;
@@ -76,29 +108,7 @@ class OfferController extends Controller
      */
     public function show($id)
     {
-        $offers = Account::find($id)->offers;
-        $request = Account::find($id)->request;
-        $targets = [];
-        $n = 0;
-        foreach($offers as $o) 
-        {
-            $user = Account::find($o->to)->investor;
-            $name = $user->name;
-            $offers[$n]->targets = $name;
-            $n++;
-        };
-        $targets = [];
-        $n = 0;
-        foreach($request as $r) 
-        {
-            $user = Account::find($r->from)->entrepreneur;
-            $name = $user->name;
-            $request[$n]->targets = $name;
-            $n++;
-        };
-        $id = auth()->user()->id;
-        dd($id);
-        return view('offer.detail', ['offers' => $offers, 'request' => $request]);
+        //
     }
 
     /**
@@ -139,7 +149,16 @@ class OfferController extends Controller
     {
         $offer = new Offer;
         $party2 = Account::find($id)->investor;
-        return view('offer.create', ['party2' => $party2, 'offer' => $offer]);
+        return view('offer.create', ['party2' => $party2, 'offer' => $offer, 'bs' => $md]);
+    }
+    
+    public function Entrepreneur($id)
+    {
+        $offer = new Offer;
+        $party2 = Entrepreneur::find($id)->with('account','account.business')->first();
+        $md = Account::with('business')->where('id', $id)->first();
+        $md = $md->getRelation('business');
+        return view('offer.create', ['party2' => $party2, 'offer' => $offer, 'bs' => $md]);
     }
 
     public function approve(Request $request)
@@ -149,4 +168,44 @@ class OfferController extends Controller
         $offer->save();
         return redirect('/offer');
     }
+
+    public function reject($offer_id)
+    {
+        // $offer = Offer::find($request->$offer_id);
+        // $offer->delete();
+        $id = $offer_id;
+        return response()->json(['id'=>$id], 200);
+    }
+    
+    public function contract()
+    {
+        $id = auth()->user()->id;
+        $offers = Account::find($id)->offers->where("party_approval2",0);
+        $request = Account::find($id)->request->where("party_approval2",0);
+        $targets = [];
+        $n = 1;
+        $offers = $offers->toArray();
+        foreach($offers as $o) 
+        {
+            $user = Account::find($o['to'])->usertype;
+            $name = $user->name;
+            $offers[$n]['targets'] = $name;
+            $offers[$n]['offer'] = "offer";
+            $n++;
+        };
+        $targets = [];
+        $n = 1;
+        $request = $request->toArray();
+        foreach($request as $r) 
+        {
+            $user = Account::find($r['from'])->usertype;
+            $name = $user->name;
+            $request[$n]['targets'] = $name;
+            $request[$n]['request'] = "request";
+            $n++;
+        };
+        $contract = array_merge($offers, $request);
+        return view('offer.contract', ['contract' => $contract]);
+    }
+
 }

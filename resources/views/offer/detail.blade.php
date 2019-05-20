@@ -4,37 +4,60 @@
 <div class="col-12">
     <div class="row justify-content-center">
         <div class="col-md-8 ">
+        <div id="accordion">
             <div class="card">
-                <div class="card-header">My Offer</div>
+                <div class="card-header">
+                <div class="row">
+                    <div class="col-6">
+                        <div id="MyOffer">
+                        <button class="btn form-control" data-toggle="collapse" data-target="#OfferData"
+                        aria-expanded = "true" aria-controls="OfferData">
+                        My Offer
+                        </button>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <span id="MyRequest">
+                        <button class="btn form-control" data-toggle="collapse" data-target="#RequestData"
+                        aria-expanded = "true" aria-controls="RequestData">
+                        Request
+                        </button>
+                        </span>
+                    </div>
+                </div>
+                </div>
+<!--                 
+                <div class="card-header" id="MyRequest">
+                </div> -->
+
+                <div id="OfferData" class="collapse show" aria-labelledby="MyOffer" data-parent="#accordion">
                 <div class="card-body">
-                
-                        <table class="responsive table">
+                        <div class="text-center h3">My Offer</div>
+                        <table class="responsive table my-4">
                             <tr>
                                 <th>To</th>
                                 <th>Fund</th>
                                 <th>Share</th>
-                                <th>Approval 1</th>
-                                <th>Approval 2</th>
-                                <th>Action</th>
+                                <th></th>
                             </tr>
                     @foreach ($offers as $offer)
-                            <tr>
-                                <td>{{$offer->targets}}</td>
-                                <td>{{$offer->fund}}</td>
-                                <td>{{$offer->share}}</td>
-                                <td>{{$offer->party_approval1}}</td>
-                                <td>{{$offer->party_approval2}}</td>
-                                <td> <a href="btn btn-outline-primary">Approve</a> </td>
+                            <tr id="row{{$offer['id']}}">
+                                <td>{{$offer['targets']}}</td>
+                                <td>{{$offer['fund']}}</td>
+                                <td>{{$offer['share']}}</td>
+                                <td> <a href="#" id="{{$offer['id']}}" class="cancel btn btn-outline-danger">Cancel</a> </td>
                             </tr>
                     @endforeach
                         </table>
                 </div>
-            </div>
-            <div class="card">
-                <div class="card-header">Offer Request</div>
-                <div class="card-body">
+                </div>
+            <!-- </div>
+            <div class="card"> -->
                 
-                        <table class="responsive table">
+                <div id="RequestData" class="collapse" aria-labelledby="MyRequest" data-parent="#accordion">
+                <div class="card-body">
+                        <div class="text-center h3">Offer Request</div>
+                        <table class="responsive table my-4">
                             <tr>
                                 <th>From</th>
                                 <th>Fund</th>
@@ -42,25 +65,20 @@
                                 <th>Action</th>
                             </tr>
                     @foreach ($request as $r)
-                            <tr>
-                                <td>{{$r->targets}}</td>
-                                <td>{{$r->fund}}</td>
-                                <td>{{$r->share}}</td>
-                                <td>{{$r->party_approval2}}</td>
-                                <td> <a href="#" id="offer{{$r->id}}" class="btn btn-outline-primary" 
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('approve').submit();">
-                                                     Approve</a> 
+                            <tr id="row{{$r['id']}}">
+                                <td>{{$r['targets']}}</td>
+                                <td>{{$r['fund']}}</td>
+                                <td>{{$r['share']}}</td>
+                                <td> <a href="#" id="{{$r['id']}}" class="approve btn btn-outline-primary">Approve</a> 
+                                    <a href="#" id="{{$r['id']}}" class="reject btn btn-outline-danger">Reject</a>
                                 </td>
-                                <form id="approve" action="{{ route('approve') }}" method="POST" style="display: none;">
-                                        @csrf
-                                        <input type="hidden" name="id" value="{{$r->id}}">
-                                    </form>
                             </tr>
+                            <form action="#" class="reject"></form>
                     @endforeach
                         </table>
                 </div>
             </div>
+        </div>
         </div>
     </div>
 </div>

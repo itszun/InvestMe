@@ -17,4 +17,9 @@ class Offer extends Model
     {
         return $this->hasOne('InvestMe\Account', 'to', 'id');
     }
+
+    public function business()
+    {
+        return $this->hasOne('InvestMe\Business', 'id', 'business');
+    }
 }

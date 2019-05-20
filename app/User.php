@@ -53,6 +53,17 @@ class User extends Authenticatable
         if($lvl == 1){
             $entr = Entrepreneur::where('id_user', $id)->first();
             return $entr;
+        }else if($lvl == 2)
+        {
+            $inv = Investor::where('id_user', $id)->first();
+            return $inv;
         }
+    }
+
+    public function balance()
+    {
+        $account = $this->account();
+        $balance = $account->balance;
+        return $balance;
     }
 }

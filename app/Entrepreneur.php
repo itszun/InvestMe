@@ -10,7 +10,7 @@ class Entrepreneur extends Model
     
     public function account()
     {
-       return $this->belongsTo('Account');
+       return $this->belongsTo('InvestMe\Account', 'id_user', 'id');
     }
 
 }

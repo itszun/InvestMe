@@ -18,12 +18,17 @@ class BusinessController extends Controller
     public function index()
     {
         $id = auth()->user()->id;
-        $md = Account::where('id', $id)->with('business','business.sector')->get();
-        foreach($md as $m)
-        {
-            $busy = $m->business;
+        $lvl = auth()->user()->level;
+        if($lvl == 1){
+            $md = Account::where('id', $id)->with('business','business.sector')->get();
+            foreach($md as $m)
+            {
+                $busy = $m->business;
+            }
+            return view('business.index', ['business' => $busy, 'md' => $md]);
         }
-        return view('business.index', ['business' => $busy, 'md' => $md]);
+        $md = Business::with('sector','owner')->get();
+        return view('business.all', ['md'=>$md]);
     }
 
     /**
@@ -76,9 +81,14 @@ class BusinessController extends Controller
      */
     public function show($id)
     {
-        $user = auth()->user()->id;
-        $md = Business::find($user)->with('sector')->where('id',$id)->first();
-        return view('business.detail', ['bs' => $md]);
+        $lvl = auth()->user()->level;
+        if($lvl == 1){
+            $user = auth()->user()->id;
+            $md = Business::find($user)->with('sector')->where('id',$id)->first();
+            return view('business.detail', ['bs' => $md]);
+        }
+        $md = Business::find($id)->with('owner', 'sector')->first();
+        return view('business.investor.detail', ['bs' => $md]);
     }
 
     /**

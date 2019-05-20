@@ -22,14 +22,21 @@ Route::group(['middleware' => ['auth']], function() {
         'entrepreneur' => 'EntrepreneurController',
         'investor' => 'InvestorController',
         'business' => 'BusinessController',
+        'offer' => 'OfferController',
     ]);
     Route::get('/offer/{id}/investor','OfferController@Investor');
     Route::get('/offer/{id}/entrepreneur','OfferController@Entrepreneur');
-    Route::post('/offer/store','OfferController@store')->name('offer.store');
-    Route::get('/offer', 'OfferController@index')->name('offer.index');
-    Route::get('/offer/{id}', 'OfferController@show')->name('offer.detail');
+    Route::get('/offer/with/{id}','OfferController@Create');
+    Route::get('/api/offer', 'APIController@offer')->name('offer.mine');
+    // Route::post('/offer/store','OfferController@store')->name('offer.store');
+    // Route::get('/offer', 'OfferController@index')->name('offer.index');
+    // Route::get('/offer/{id}', 'OfferController@show')->name('offer.detail');
     Route::get('/profile','ProfileController@index')->name('profile.index');
     Route::get('/profile/edit','ProfileController@edit')->name('profile.index');
-    Route::post('/approve','OfferController@approve')->name('approve');
     Route::put('/profile/update','AccountController@update')->name('account.update');
+
+    Route::get('/contract','OfferController@contract')->name('offer.contract');
+
+    Route::get('/approve/{id}','APIController@approve')->name('offer.approve');
+    Route::get('/reject/{id}', 'APIController@reject')->name('offer.reject');
 });

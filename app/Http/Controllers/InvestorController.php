@@ -16,7 +16,8 @@ class InvestorController extends Controller
      */
     public function index()
     {
-        //
+        $inv = Investor::all();
+        return view('investor.index', ['investor' => $inv]);
     }
 
     /**

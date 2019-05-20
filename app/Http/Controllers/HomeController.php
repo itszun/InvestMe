@@ -26,6 +26,6 @@ class HomeController extends Controller
     {
         $investor = new Investor;
         $investors = $investor->all();
-        return view('home', ['investors' => $investors]);
+        return view('home');
     }
 }

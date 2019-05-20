@@ -8,6 +8,18 @@ class Account extends Model
 {
     protected $table = 'users';
 
+    public function usertype()
+    {
+        $lvl = $this->level;
+        if($lvl == 1)
+        {
+            return $this->hasOne('InvestMe\Entrepreneur', 'id_user', 'id' );
+        }else if($lvl == 2)
+        {
+            return $this->hasOne('InvestMe\Investor', 'id_user', 'id' );
+        }
+    }
+
     public function investor()
     {
         return $this->hasOne('InvestMe\Investor', 'id_user', 'id' );
