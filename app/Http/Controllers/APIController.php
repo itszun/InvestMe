@@ -5,6 +5,8 @@ namespace InvestMe\Http\Controllers;
 use Illuminate\Http\Request;
 use InvestMe\Account;
 use InvestMe\Offer;
+use InvestMe\Entrepreneur;
+use InvestMe\Investor;
 
 class APIController extends Controller
 {
@@ -34,5 +36,13 @@ class APIController extends Controller
         $offer->approved = 1;
         $offer->save();
         return response()->json(['id'=>$id], 200);
+    }
+
+    public function transfer($id)
+    {
+        $offer = Offer::find($id)->where('approved',1)->first(['id', 'from', 'to', 'id_business']);
+        $to = $offer->to;
+        $entre = Entrepreneur::find(2)->where('id_user',$to)->first();
+        return response()->json(['x'=>$offer->to]);
     }
 }

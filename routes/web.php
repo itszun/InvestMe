@@ -39,4 +39,5 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('/approve/{id}','APIController@approve')->name('offer.approve');
     Route::get('/reject/{id}', 'APIController@reject')->name('offer.reject');
+    Route::get('/transfer/{id}','APIController@transfer')->name('offer.transfer');
 });
