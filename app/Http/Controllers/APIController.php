@@ -31,7 +31,7 @@ class APIController extends Controller
     public function approve($id)
     {
         $offer = Offer::find($id);
-        $offer->party_approval2 = 1;
+        $offer->approved = 1;
         $offer->save();
         return response()->json(['id'=>$id], 200);
     }

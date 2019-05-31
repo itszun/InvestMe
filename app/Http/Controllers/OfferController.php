@@ -20,10 +20,10 @@ class OfferController extends Controller
     public function index()
     {
         $id = auth()->user()->id;
-        $offers = Account::find($id)->offers->where("party_approval2",0);
-        $request = Account::find($id)->request->where("party_approval2",0);
+        $offers = Account::find($id)->offers->where("approved",0);
+        $request = Account::find($id)->request->where("approved",0);
         $targets = [];
-        $n = 1;
+        $n = 0;
         $offers = $offers->toArray();
         foreach($offers as $o) 
         {
@@ -33,7 +33,7 @@ class OfferController extends Controller
             $n++;
         };
         $targets = [];
-        $n = 1;
+        $n = 0;
         $request = $request->toArray();
         foreach($request as $r) 
         {
@@ -95,7 +95,7 @@ class OfferController extends Controller
         $offer->id_business = $request->business;
         $offer->fund = $request->fund;
         $offer->share = $request->sharing;
-        $offer->party_approval1 = 1;
+        $offer->approved = 0;
         $offer->save();
         return redirect('home');
     }
@@ -149,6 +149,7 @@ class OfferController extends Controller
     {
         $offer = new Offer;
         $party2 = Account::find($id)->investor;
+        $md = null;
         return view('offer.create', ['party2' => $party2, 'offer' => $offer, 'bs' => $md]);
     }
     
@@ -158,7 +159,7 @@ class OfferController extends Controller
         $party2 = Entrepreneur::find($id)->with('account','account.business')->first();
         $md = Account::with('business')->where('id', $id)->first();
         $md = $md->getRelation('business');
-        return view('offer.create', ['party2' => $party2, 'offer' => $offer, 'bs' => $md]);
+        return view('offer.create', ['party2' => $party2, 'offer' => $offer, 'business' => $md]);
     }
 
     public function approve(Request $request)
@@ -183,7 +184,7 @@ class OfferController extends Controller
         $offers = Account::find($id)->offers->where("party_approval2",0);
         $request = Account::find($id)->request->where("party_approval2",0);
         $targets = [];
-        $n = 1;
+        $n = 0;
         $offers = $offers->toArray();
         foreach($offers as $o) 
         {
@@ -194,7 +195,7 @@ class OfferController extends Controller
             $n++;
         };
         $targets = [];
-        $n = 1;
+        $n = 0;
         $request = $request->toArray();
         foreach($request as $r) 
         {

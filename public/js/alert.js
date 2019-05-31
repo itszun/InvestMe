@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    $('.reject').on('click', function(e) {
+    $('a.reject').on('click', function(e) {
         e.preventDefault();
         var id = this.id;
         swal({
@@ -35,8 +35,10 @@ $(document).ready(function(){
             }
         });
     }); 
-    $('.approve').on('click', function(e) {
+    $('a.approve').on('click', function(e) {
         e.preventDefault();
+        console.log('uwu');
+
         var id = this.id;
         $.ajaxSetup({
             headers: {

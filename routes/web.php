@@ -24,9 +24,9 @@ Route::group(['middleware' => ['auth']], function() {
         'business' => 'BusinessController',
         'offer' => 'OfferController',
     ]);
-    Route::get('/offer/{id}/investor','OfferController@Investor');
-    Route::get('/offer/{id}/entrepreneur','OfferController@Entrepreneur');
-    Route::get('/offer/with/{id}','OfferController@Create');
+    Route::get('/offer/{id}/investor','OfferController@Investor')->name('offer.with.inv');
+    Route::get('/offer/{id}/entrepreneur','OfferController@Entrepreneur')->name('offer.with.ent');
+    Route::get('/offer/with/{id}','OfferController@Create')->name('offer.with');
     Route::get('/api/offer', 'APIController@offer')->name('offer.mine');
     // Route::post('/offer/store','OfferController@store')->name('offer.store');
     // Route::get('/offer', 'OfferController@index')->name('offer.index');
