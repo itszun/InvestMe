@@ -18,7 +18,7 @@
             <div class="card my-2">
                     <div class="card-header">
                     Personal Information
-                    <a href="/profile/edit" class="btn btn-outline-primary float-right">Edit Information</a>
+                    <a href="{{route('profile.edit')}}" class="btn btn-outline-primary float-right">Edit Information</a>
                     </div>
                     <div class="card-body">
                     <table class="responsive-table ">

@@ -60,9 +60,9 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a href="/offer" class="dropdown-item">My Offer</a>
+                                    <a href="{{route('offer.index')}}" class="dropdown-item">My Offer</a>
                                     <hr/>
-                                    <a href="/profile" class="dropdown-item">Profile</a>
+                                    <a href="{{route('profile.index')}}" class="dropdown-item">Profile</a>
                                     <hr/>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();

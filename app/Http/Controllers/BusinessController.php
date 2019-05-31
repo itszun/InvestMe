@@ -115,7 +115,8 @@ class BusinessController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $x = Business::find($id)->first();
+        dd($x);
     }
 
     /**

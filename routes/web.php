@@ -32,7 +32,7 @@ Route::group(['middleware' => ['auth']], function() {
     // Route::get('/offer', 'OfferController@index')->name('offer.index');
     // Route::get('/offer/{id}', 'OfferController@show')->name('offer.detail');
     Route::get('/profile','ProfileController@index')->name('profile.index');
-    Route::get('/profile/edit','ProfileController@edit')->name('profile.index');
+    Route::get('/profile/edit','ProfileController@edit')->name('profile.edit');
     Route::put('/profile/update','AccountController@update')->name('account.update');
 
     Route::get('/contract','OfferController@contract')->name('offer.contract');

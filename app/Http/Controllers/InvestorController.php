@@ -27,7 +27,8 @@ class InvestorController extends Controller
      */
     public function create()
     {
-        //
+        $x = new Investor;
+        return view('investor.create', ["x" => $x]);
     }
 
     /**
@@ -38,7 +39,17 @@ class InvestorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $x = new Investor;
+        $x->id_user = $request->id_user;
+        $x->name = $request->name;
+        $x->address = $request->address;
+        $x->birthdate = $request->birthdate;
+        $x->age = Carbon::parse($request->birthdate)->age;
+        // $x->identity = $request->identity;
+        // $x->bank_account = $request->banck_account;
+        // $x->profile_picture = $request->profile_picture;
+        $x->save();
+        return redirect('/investor');
     }
 
     /**
@@ -49,7 +60,8 @@ class InvestorController extends Controller
      */
     public function show($id)
     {
-        //
+        $x = Investor::find($id);
+        return view('investor.detail', [ "x" => $x] );
     }
 
     /**
@@ -60,7 +72,8 @@ class InvestorController extends Controller
      */
     public function edit($id)
     {
-        //
+        $x = Investor::find($id);
+        return view('investor.edit', [ "x" => $x]);
     }
 
     /**
@@ -72,40 +85,12 @@ class InvestorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $x = Account::find($id)->investor;
+        $x = Investor::find($id);
         $x->name = $request->name;
         $x->address = $request->address;
         $x->birthdate = $request->birthdate;
         $x->save();
-        $y = Account::find($id)->contact;
-        $length = count($request->contact);
-        $core = count($y);
-        for ($i=0; $i < $length; $i++) { 
-            if($length > $core){
-                if($i >= $core)
-                {
-                    $contact = new Contact;
-                    $contact->id_user = $id;
-                    $contact->number = $request->contact[$i];
-                    $contact->save();
-                }
-            }
-            if($i < $core){
-            $y[$i]->number = $request->contact[$i];
-            $saved = $y[$i]->save();
-            }
-            if($length < $core)
-            {
-                if($i == $length-1){
-                    $over = $core - $length;
-                    for ($n=1; $n <= $over ; $n++) { 
-                        $y[$i+$n]->delete();
-                    }
-                }
-            }
-        
-        };
-        return redirect('/profile');
+        return redirect('/investor');
     }
 
     /**
@@ -116,6 +101,7 @@ class InvestorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Investor::destroy($id);
+        return redirect('investor');
     }
 }

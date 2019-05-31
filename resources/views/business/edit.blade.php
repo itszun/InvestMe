@@ -17,7 +17,7 @@
                 </div>
                 </div>
                 <div class="card-body">
-                    {{Form::model($business, ['route' => ['business.update', $bs->id], 'class' => 'form-group container'])}}
+                    {{Form::model($business, ['route' => ['business.update', $bs->id], 'class' => 'form-group container', 'method' => 'PUT'])}}
                     {{Form::token()}}
                     <div class="form-group">
                     <label for="name">Name</label>
@@ -36,14 +36,14 @@
                     <input type="text" name="description" id="description" class="form-control" value="{{$bs->description}}">
                     </div>
                     <div class="form-group">
-                    <label for="sector">Sector</label>
+                    <!-- <label for="sector">Sector</label> -->
 
                     <!-- <select class="form-control" name="sector">
                     @foreach($sector as $s)
                         <option value="$s->id">{{$s->name}}</option>
                     @endforeach
                     </select> -->
-                    {{Form::select('sector', $sector, null)}}
+                    
                     </div>
                     <div class="form-group">
                     <label for="contact">Contact</label>
@@ -52,7 +52,7 @@
                     <span class="validity"></span>
                     </div>
                     <div class="form-group">
-                    {{Form::submit('Create New Business', ['class'=>'btn btn-primary form-control'])}}
+                    {{Form::submit('Edit Business', ['class'=>'btn btn-primary form-control'])}}
                     </div>
                 {{Form::close()}}
                 </div>

@@ -5,20 +5,20 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                {{ Form::model($entrepreneur, ['route' => ['entrepreneur.update', $entrepreneur->id],
+                {{ Form::model($x, ['route' => ['investor.update', $x->id],
                 'class' => 'form-group container p-5', 'method' => 'put']) }}
                     {{Form::token()}}
                     <div class="form-group">
                         {{Form::label('name', "Name")}}
-                        {{Form::text('name', $entrepreneur->name, ['class' => 'form-control'])}}
+                        {{Form::text('name', $x->name, ['class' => 'form-control'])}}
                     </div>
                     <div class="form-group">
                         {{Form::label('address', "Address")}}
-                        {{Form::text('address', $entrepreneur->address, ['class' => 'form-control'])}}
+                        {{Form::text('address', $x->address, ['class' => 'form-control'])}}
                     </div>
                     <div class="form-group">
                         {{Form::label('birthdate', "Birthdate")}}
-                        {{Form::date('birthdate', $entrepreneur->birthdate, ['class' => 'form-control'])}}
+                        {{Form::date('birthdate', $x->birthdate, ['class' => 'form-control'])}}
                     </div>
                     <div class="form-group">
                         {{Form::submit('Edit', [ 'class' => "btn btn-outline-primary"])}}
