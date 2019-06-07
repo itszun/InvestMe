@@ -21,8 +21,8 @@
                     <div>Age : {{ $entrepreneur->age }}</div>
                 </div>
                 <div class="col-3">
-                    <a href="/entrepreneur/{{ $entrepreneur->id}}" class="btn btn-outline-primary">Detail</a>
-                    <a href="/entrepreneur/{{ $entrepreneur->id}}" class="btn btn-outline-danger">Delete</a>
+                    <a href="{{route('entrepreneur.show', $entrepreneur->id)}}" class="btn btn-outline-primary">Detail</a>
+                    <a href="{{route('entrepreneur.destroy', $entrepreneur->id)}}" class="btn btn-outline-danger">Delete</a>
                 </div>
             </div>
             <hr>

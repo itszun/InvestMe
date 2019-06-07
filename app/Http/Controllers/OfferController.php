@@ -23,24 +23,20 @@ class OfferController extends Controller
         $offers = Account::find($id)->offers->where("approved",0);
         $request = Account::find($id)->request->where("approved",0);
         $targets = [];
-        $n = 0;
         $offers = $offers->toArray();
-        foreach($offers as $o) 
+        foreach($offers as $o => $val) 
         {
-            $user = Account::find($o['to'])->usertype;
+            $user = Account::find($offers[$o]['to'])->usertype;
             $name = $user->name;
-            $offers[$n]['targets'] = $name;
-            $n++;
+            $offers[$o]['targets'] = $name;
         };
         $targets = [];
-        $n = 0;
         $request = $request->toArray();
-        foreach($request as $r) 
+        foreach($request as $r => $val) 
         {
-            $user = Account::find($r['from'])->usertype;
+            $user = Account::find($request[$r]['from'])->usertype;
             $name = $user->name;
-            $request[$n]['targets'] = $name;
-            $n++;
+            $request[$r]['targets'] = $name;
         };
         return view('offer.detail', ['offers' => $offers, 'request' => $request]);
     }
@@ -181,8 +177,8 @@ class OfferController extends Controller
     public function contract()
     {
         $id = auth()->user()->id;
-        $offers = Account::find($id)->offers->where("party_approval2",0);
-        $request = Account::find($id)->request->where("party_approval2",0);
+        $offers = Account::find($id)->offers->where("approved",1);
+        $request = Account::find($id)->request->where("approved",1);
         $targets = [];
         $n = 0;
         $offers = $offers->toArray();

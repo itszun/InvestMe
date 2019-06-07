@@ -22,7 +22,7 @@
                 </div>
                 <div class="col-3">
                     <a href="{{ route('investor.show',$inv->id)}}" class="btn btn-outline-primary">Detail</a>
-                    <a href="/entrepreneur/{{ $inv->id}}" class="btn btn-outline-danger">Delete</a>
+                    <a href="{{route('investor.destroy', $inv->id)}}" class="btn btn-outline-danger">Delete</a>
                 </div>
             </div>
             <hr>

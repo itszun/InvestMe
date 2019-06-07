@@ -27,7 +27,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <a href="/entrepreneur/{{ $entrepreneur->id}}/edit">Edit</a>
+                                        <a href="{{route('entrepreneur.edit', $entrepreneur->id)}}">Edit</a>
                                     </td>
                                 </tr>
                             </table>

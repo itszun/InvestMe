@@ -92,7 +92,7 @@ $(document).ready(function(){
                     icon : 'success',
                     title : 'Offer Approved'
                 }).then(function(){
-                    tr.fadeOut(1000, function(){
+                    tr.fadeOut(100, function(){
                         tr.remove();
                     })
                 });

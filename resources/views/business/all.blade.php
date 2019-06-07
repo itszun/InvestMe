@@ -36,10 +36,10 @@
                     </div>
                     <div class="col-2">
                         <div class="row">
-                            <a href="/business/{{$b->id}}" class="btn btn-primary ">Detail</a>
+                            <a href="{{ route('business.show',$b->id)}}" class="btn btn-primary ">Detail</a>
                         </div>
                         <div class="row my-1">
-                            <a href="/business/{{$b->id}}/edit" class="btn btn-info text-white">Edit</a>
+                            <a href="{{route('business.edit',$b->id)}}" class="btn btn-info text-white">Edit</a>
                         </div>
                     </div>
                 </div>
