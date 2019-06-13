@@ -161,17 +161,16 @@ class OfferController extends Controller
     public function approve(Request $request)
     {   
         $offer = Offer::find($request->id);
-        $offer->party_approval2 = 1;
+        $offer->approved = 1;
         $offer->save();
-        return redirect('/offer');
+        return response()->json(['id'=>$id], 200);
     }
 
     public function reject($offer_id)
     {
-        // $offer = Offer::find($request->$offer_id);
-        // $offer->delete();
-        $id = $offer_id;
-        return response()->json(['id'=>$id], 200);
+        $offer = Offer::find($request->$offer_id);
+        $offer->delete();
+        return response()->json(['id'=>$offer_id], 200);
     }
     
     public function contract()

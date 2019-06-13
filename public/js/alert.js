@@ -15,7 +15,7 @@ $(document).ready(function(){
         console.log(cart);
         swal({
             title: 'Transfer',
-            text: 'uwuuwu uwu uwu uwu wuw wuwuwu wuwuwuw wuuwu uwu uwu uwu wuw wuwuwu wuwuwuw wu uwu uwu uwu wuw wuwuwu wuwuwuw wu'
+            text: 'Commit to transfer ?'
         })
         $.ajaxSetup({
             headers: {
@@ -32,6 +32,46 @@ $(document).ready(function(){
                 swal({
                     text: "Sorry, There is a Problem<br>try to Refresh the Page",
                     icon:"error"
+                })
+            }
+        })
+    })
+
+    $('a.rmv').on('click', function(e) {
+        e.preventDefault()
+        var id = this.id
+        swal({
+            icon: 'warning',
+            buttons: ["Cancel", "Yes"],
+            dangerMode : true,
+            text : 'Delete Business ?'
+        }).then(function(isConfirm){
+            if(isConfirm){
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                    });
+                $.ajax({
+                    type:"DELETE",
+                    url: this.href,
+                    data: {
+                        '_token' : $('meta[name="csrf-token"]').attr('content'),
+                        'id' : id
+                    },
+                    success:function(data){
+                        swal("Confirmed : Offer-"+data+" Rejected").then(function(){
+                            tr.fadeOut(1000, function(){
+                                tr.remove();
+                            })
+                        });
+                    },
+                    error:function(data){
+                        swal({
+                            text: "Sorry, There is a Problem<br>try to Refresh the Page",
+                            icon:"error"
+                        })
+                    }
                 })
             }
         })
@@ -55,7 +95,7 @@ $(document).ready(function(){
                   });
                 $.ajax({
                     type:"GET",
-                    url:"/reject/"+id,
+                    url:this.href,
                     success:function(data){
                         swal("Confirmed : Offer-"+data.id+" Rejected").then(function(){
                             tr.fadeOut(1000, function(){
@@ -85,7 +125,7 @@ $(document).ready(function(){
           });
         $.ajax({
             type: "GET",
-            url: "/approve/"+id,
+            url: this.href,
             success:function(data){
                 var tr = $('tr#row'+id);
                 swal({

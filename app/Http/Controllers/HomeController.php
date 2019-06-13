@@ -4,6 +4,7 @@ namespace InvestMe\Http\Controllers;
 
 use Illuminate\Http\Request;
 use InvestMe\Investor;
+use InvestMe\Entrepreneur;
 
 class HomeController extends Controller
 {
@@ -24,8 +25,13 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $investor = new Investor;
-        $investors = $investor->all();
-        return view('home');
+        $lvl = auth()->user()->level;
+        if($lvl == 2){
+            $x = new Entrepreneur;
+        }else if($lvl == 1){
+            $x = new Investor;
+        }
+        $l = $x->all();
+        return view('home', ['x' => $l]);
     }
 }

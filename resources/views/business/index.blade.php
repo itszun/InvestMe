@@ -29,15 +29,28 @@
                     </div>
                     <div class="col-2">
                         <div class="row">
-                            <a href="{{route('business.show',$b->id)}}" class="btn btn-primary ">Detail</a>
+                            <a ref="{{route('business.show',$b->id)}}" class="btn btn-primary ">Detail</a>
                         </div>
                         <div class="row my-1">
                             <a href="{{route('business.edit',$b->id)}}" class="btn btn-info text-white">Edit</a>
                         </div>
                         <div class="row my-1">
-                            <a href="{{route('business.destroy',$b->id)}}" class="btn btn-danger text-white">Remove</a>
+                            <a href="{{route('business.destroy',$b->id)}}" id="{{$b->id}}" class="btn btn-danger .rmv text-white"
+                            onclick="
+                                var result = confirm('Are you sure ?');
+                                if(result){
+                                    event.preventDefault();
+                                    document.getElementById('delete-form').submit();
+                                }
+                                "
+                            >Remove</a>
                         </div>
                     </div>
+                    <form action="{{route('business.destroy', [$b->id])}}" method="POST"
+                    style="display:none;" id="delete-form">
+                        <input type="hidden" name="_method" value="delete">
+                        {{csrf_field()}}
+                    </form>
                 </div>
                 @endforeach
                 

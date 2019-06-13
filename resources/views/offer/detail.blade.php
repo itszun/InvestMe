@@ -69,8 +69,8 @@
                                 <td>{{$r['targets']}}</td>
                                 <td>{{$r['fund']}}</td>
                                 <td>{{$r['share']}}</td>
-                                <td> <a href="" id="{{$r['id']}}" class="approve btn btn-outline-primary">Approve</a> 
-                                    <a href="" id="{{$r['id']}}" class="reject btn btn-outline-danger">Reject</a>
+                                <td> <a href="{{route('offer.approve', $r['id'])}}" id="{{$r['id']}}" class="approve btn btn-outline-primary">Approve</a> 
+                                    <a href="{{route('offer.reject', $r['id'])}}" id="{{$r['id']}}" class="reject btn btn-outline-danger">Reject</a>
                                 </td>
                             </tr>
                             <form action="#" class="reject"></form>

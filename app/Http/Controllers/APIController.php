@@ -27,7 +27,7 @@ class APIController extends Controller
 
     public function reject($id)
     {
-        $offer = Offer::destroy($id);
+        $offer = Offer::find($id);
         return response()->json(['id'=>$id], 200);
     }
     public function approve($id)

@@ -127,6 +127,8 @@ class BusinessController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $x = Business::find($id)->first();
+        $x->delete();
+        return redirect(route('business.index'));
     }
 }
